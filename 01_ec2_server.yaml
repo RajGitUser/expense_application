@@ -5,7 +5,7 @@
     ami_id: ami-09c813fb71547fc4f
     sg_id: sg-08e9a23d01ec385fb
     zone_id: AKIA4LBEIRKJTVI5436R
-    domain_name: rajkumardaws.space
+    domine_name: mandark.icu
     instances:
     - backend
     - mysql
@@ -24,25 +24,25 @@
     loop: "{{ instances }}"
     register: ec2_output
   
-  - name: update the route53
+  - name: create route53 record
     amazon.aws.route53:
       state: present
-      zone: "{{ domain_name }}"
-      record: "{{ item }}.{{ domain_name }}"
+      zone: "{{ domine_name }}"
+      record: "{{ item.item }}.{{ domine_name }}"  #backend.mandark.icu
       type: A
       ttl: 1
-      value: "{{ item.instances[0].private_ip_address }}"        ### backend.mandark.icu
+      value: "{{ item.instances[0].private_ip_address }}"
       overwrite: true
     loop: "{{ ec2_output.results }}"
-
-  - name: update the route53
+  
+  - name: create route53 record for frontend
     amazon.aws.route53:
       state: present
-      zone: "{{ domain_name }}"
-      record: "{{ item }}.{{ domain_name }}"
+      zone: "{{ domine_name }}"
+      record: "{{ domine_name }}"  #mandark.icu
       type: A
       ttl: 1
-      value: "{{ item.instances[0].public_ip_address }}" ### mandark.icu
+      value: "{{ item.instances[0].public_ip_address }}"
       overwrite: true
     when: item.item == "frontend"
     loop: "{{ ec2_output.results }}"
