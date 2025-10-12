@@ -33,6 +33,7 @@
       ttl: 1
       value: "{{ item.instances[0].private_ip_address }}"
       overwrite: true
+    when: item.item !== "frontend"
     loop: "{{ ec2_output.results }}"
   
   - name: create route53 record for frontend
