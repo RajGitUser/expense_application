@@ -31,7 +31,7 @@
       record: "{{ item }}.{{ domine_name }}"
       type: A
       ttl: 1
-      value: "{{ item.intances [0].private_ip_address }}" ### backend.mandark.icu
+      value: "{{ item.instances[0].private_ip_address }}" ### backend.mandark.icu
       write: true
     loop: "{{ ec2_output.results }}"
 
@@ -42,7 +42,7 @@
       record: "{{ item }}.{{ domine_name }}"
       type: A
       ttl: 1
-      value: "{{ item.intances [0].public_ip_address }}" ### mandark'icu
+      value: "{{ item.instances[0].public_ip_address }}" ### mandark.icu
       write: true
     when: item.item == "frontend"
     loop: "{{ ec2_output.results }}"
