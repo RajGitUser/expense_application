@@ -1,5 +1,5 @@
 - name: setup patching server
-  hosts: app_servers
+  hosts: epix_servers
   become: yes
   gather_facts: yes
   tasks:
