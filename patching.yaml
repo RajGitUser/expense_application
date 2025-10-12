@@ -1,9 +1,8 @@
 - name: setup patching server
-  hosts: all
+  hosts: backend
   become: yes
   tasks:
   - name: initiate patching
     ansible.builtin.dnf:
       name: kernel
       status: latest
-      
