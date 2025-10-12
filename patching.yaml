@@ -26,3 +26,10 @@
 
   - name: initiating reboot
     ansible.builtin.reboot:
+  
+  - name: validating OS version post patching
+    ansible.builtin.shell: uname -r
+    register: kernel_info
+  - name: print information
+    ansible.builtin.debug:
+        msg: "{{ kernel_info.stdout }}"
