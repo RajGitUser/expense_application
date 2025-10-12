@@ -18,10 +18,10 @@
       name: expenses
       create_home: yes
   
-  # - name: remove directory
-  #   ansible.biultin.file:
-  #     path: /app
-  #     state: absent
+  - name: remove directory
+    ansible.biultin.file:
+      path: /app
+      state: absent
 
   - name: create a directory
     ansible.builtin.file:
@@ -53,6 +53,20 @@
       src: backend.service
       dest: /etc/systemd/system/backend.service
   
+  - name: install mysql db
+    ansible.builtin.package:
+      name: mysql-server
+      state: present
+  
+  - name: load the schemas
+    community.mysql.mysql_db:
+      state: import
+      name: all
+      login_host: mysql.mandark.icu
+      login_user: root
+      login_password: ExpenseApp@1
+      target: /app/schema/backend.sql
+
   - name: daemon reload and start
     ansible.builtin.systemd_service:
       name: backend
