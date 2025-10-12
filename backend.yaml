@@ -50,8 +50,8 @@
 
   - name: copy the backend service file
     ansible.builtin.copy:
-      name: backend.service
-      path: /etc/systemd/system/backend.service
+      src: backend.service
+      dest: /etc/systemd/system/backend.service
   
   - name: daemon reload and start
     ansible.builtin.systemd_service:
