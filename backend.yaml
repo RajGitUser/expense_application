@@ -58,6 +58,11 @@
       name: mysql-server
       state: present
   
+  - name: install mysql python libraries
+    ansible.builtin.pip:
+      executable: pip3.9
+      name: PyMySQL
+  
   - name: load the schemas
     community.mysql.mysql_db:
       state: import
