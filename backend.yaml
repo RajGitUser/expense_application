@@ -30,7 +30,7 @@
 
   - name: Delete existed backend file
     ansible.builtin.file:
-      src: /tmp/backend.zip
+      path: /tmp/backend.zip
       state: absent
   
   - name: download the backend server file
