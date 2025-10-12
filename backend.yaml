@@ -18,7 +18,7 @@
       name: expenses
       create_home: yes
   
-  - name: delete directory
+  - name: remove directory
     ansible.biultin.file:
       path: /app
       state: absent
