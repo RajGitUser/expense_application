@@ -22,7 +22,7 @@
     ansible.builtin.file:
       path: /usr/share/nginx/html/
       state: directory
-      
+
   - name: download the frontend file
     ansible.builtin.get_url:
       url: https://expense-joindevops.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
@@ -36,8 +36,8 @@
   
   - name: copy the nginx reverse proxy config
     ansible.builtin.copy:
-      name: expense.conf
-      path: /etc/nginx/default.d/expense.conf
+      src: expense.conf
+      dest: /etc/nginx/default.d/expense.conf
   
   - name: start the frontend service
     ansible.builtin.service:
