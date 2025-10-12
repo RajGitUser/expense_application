@@ -7,9 +7,9 @@
     zone_id: AKIA4LBEIRKJTVI5436R
     domine_name: mandark.icu
     instances:
-    - backend
-    - mysql
-    - frontend
+    # - backend
+    # - mysql
+    # - frontend
 
   tasks:
   - name: create ec2 instances

@@ -1,7 +1,17 @@
 - name: setup patching server
   hosts: all
   become: yes
+  gather_facts: yes
   tasks:
+  - name: Distribution
+    debug: msg="{{ ansible_distribution }}"
+  
+  - name: Distribution version
+    debug: msg="{{ ansible_distribution_version}}"
+  
+  - name: Distribution major version
+    debug: msg="{{ ansible_distribution_major_version }}"
+  
   - name: initiate patching
     ansible.builtin.dnf:
       name: kernel
