@@ -1,5 +1,5 @@
 - name: setup patching server
-  hosts: all
+  hosts: db_servers
   become: yes
   gather_facts: yes
   tasks:
