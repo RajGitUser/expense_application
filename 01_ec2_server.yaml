@@ -32,7 +32,7 @@
       type: A
       ttl: 1
       value: "{{ item.instances[0].private_ip_address }}" ### backend.mandark.icu
-      write: true
+      overwrite: true
     loop: "{{ ec2_output.results }}"
 
   - name: update the route53
@@ -43,7 +43,7 @@
       type: A
       ttl: 1
       value: "{{ item.instances[0].public_ip_address }}" ### mandark.icu
-      write: true
+      overwrite: true
     when: item.item == "frontend"
     loop: "{{ ec2_output.results }}"
 
