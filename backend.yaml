@@ -17,9 +17,9 @@
     ansible.builtin.user:
       name: expenses
       create_home: yes
-  
-  - name: remove directory
-    ansible.biultin.file:
+
+  - name: remove app directory
+    ansible.builtin.file:
       path: /app
       state: absent
 
