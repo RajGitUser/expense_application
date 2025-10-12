@@ -5,7 +5,7 @@
     ami_id: ami-09c813fb71547fc4f
     sg_id: sg-08e9a23d01ec385fb
     zone_id: AKIA4LBEIRKJTVI5436R
-    domain_name: mandark.icu
+    domain_name: rajkumardaws.space
     instances:
     - backend
     - mysql
