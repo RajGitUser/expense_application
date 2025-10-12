@@ -15,8 +15,8 @@
   
   - name: adding user
     ansible.builtin.user:
-      name: expenses
-      create_home: yes
+      name: expense
+      comment: expense to run app
 
   - name: remove app directory
     ansible.builtin.file:
