@@ -63,22 +63,30 @@
       name: mysql-server
       state: present
   
-  - name: install mysql python libraries
-    ansible.builtin.pip:
-      executable: pip3.9
-      name: "{{ item }}"
-    loop:
-    - PyMySQL
-    - cryptography
+  # - name: install mysql python libraries
+  #   ansible.builtin.pip:
+  #     executable: pip3.9
+  #     name: "{{ item }}"
+  #   loop:
+  #   - PyMySQL
+  #   - cryptography
   
-  - name: load the schemas
-    community.mysql.mysql_db:
-      state: import
-      name: all
-      login_host: mysql.mandark.icu
-      login_user: root
-      login_password: ExpenseApp@1
-      target: /app/schema/backend.sql
+  # - name: load the schemas
+  #   community.mysql.mysql_db:
+  #     state: import
+  #     name: all
+  #     login_host: mysql.mandark.icu
+  #     login_user: root
+  #     login_password: ExpenseApp@1
+  #     target: /app/schema/backend.sql
+
+  - name: check if schema already loaded
+    ansible.builtin.shell: mysql -h 172.31.6.224 -uroot -pExpenseApp@1 -e "show databases like 'expenses';" | wc -l
+    register: backend_output
+
+  - name: load schema
+    ansible.builtin.shell: mysql -h 172.31.6.224 -uroot -pExpenseApp@1 < /app/schema/backend.sql
+    when: backend_output.stdout | int == 0
 
   - name: daemon reload and start
     ansible.builtin.systemd_service:
