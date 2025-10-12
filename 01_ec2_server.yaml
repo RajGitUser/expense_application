@@ -33,7 +33,7 @@
       ttl: 1
       value: "{{ item.intances [0].private_ip_address }}" ### backend.mandark.icu
       write: true
-    loop: "{{ ec2_output_results }}"
+    loop: "{{ ec2_output.results }}"
 
   - name: update the route53
     amazon.aws.route53:
@@ -44,7 +44,8 @@
       ttl: 1
       value: "{{ item.intances [0].public_ip_address }}" ### mandark'icu
       write: true
-    loop: "{{ ec2_output_results }}"
+    when: item.item == "frontend"
+    loop: "{{ ec2_output.results }}"
 
 
 
