@@ -20,14 +20,14 @@ Suitable for Dev / QA / Prod environments
 
 # Architecture Overview
 # User
-  |
-  v
+#  |
+#  v
 # Frontend (Nginx / Web UI)
-  |
-  v
+#  |
+#  v
 # Backend API (Systemd Service)
-  |
-  v
+#  |
+#  v
 # MySQL Database
 
 
@@ -38,18 +38,6 @@ Backend processes business logic and connects to MySQL
 MySQL stores expense data
 
 All components are provisioned and managed via Ansible playbooks
-
-# Repository Structure
-expense_application/
-├── 01_ec2_server.yaml      # Base server provisioning & setup
-├── backend.yaml            # Backend service deployment
-├── frontend.yaml           # Frontend deployment & configuration
-├── mysql.yaml              # MySQL installation & configuration
-├── patching.yaml           # OS patching and updates
-├── inventory.ini           # Ansible inventory
-├── backend.service         # Systemd unit file for backend
-├── expense.conf            # Application / Nginx configuration
-└── README.md
 
 # Prerequisites
 
