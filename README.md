@@ -1,3 +1,23 @@
+💰 Expense Application – Ansible Automation
+
+This repository contains Ansible playbooks and configurations to automate the deployment and management of a complete Expense Tracking Application stack, including Frontend, Backend, and Database (MySQL) components.
+
+It is designed to provide repeatable, consistent, and scalable deployments across Linux servers using Infrastructure as Code (IaC) principles.
+
+📌 Key Features
+
+Automated deployment using Ansible
+
+Separate playbooks for frontend, backend, and database
+
+Systemd-based service management
+
+Centralized inventory-driven configuration
+
+Idempotent execution for safe re-runs
+
+Suitable for Dev / QA / Prod environments
+
 🧠 Architecture Overview
 User
   |
@@ -10,97 +30,82 @@ Backend API (Systemd Service)
   v
 MySQL Database
 
-💰 Expense Application
 
-Ansible automation to deploy and manage a full Expense Tracking Application stack including backend, frontend, and database infrastructure. This repo includes playbooks, inventory, and service configurations that help provision servers, install dependencies, and run services consistently using Ansible. 
-GitHub
+Frontend serves the UI and forwards requests to backend
 
-📌 Table of Contents
+Backend processes business logic and connects to MySQL
 
-About
+MySQL stores expense data
 
-Repository Structure
+All components are provisioned and managed via Ansible playbooks
 
-Prerequisites
-
-Usage
-
-Playbooks & Configs
-
-Contributing
-
-License
-
-🧠 About
-
-This project automates deployment of an Expense Application stack using Ansible. It orchestrates provisioning of backend and frontend services along with database setup (MySQL), patching, and system settings — all configured to run on remote hosts defined in the inventory. 
-GitHub
-
-
-*.yaml — Ansible playbooks for provisioning servers and services. 
-GitHub
-
-inventory.ini — Defines target hosts and groups for Ansible. 
-GitHub
-
-*.service — Systemd service unit definitions for application services. 
-GitHub
-
-expense.conf — Application or service configuration template. 
-GitHub
+📁 Repository Structure
+expense_application/
+├── 01_ec2_server.yaml      # Base server provisioning & setup
+├── backend.yaml            # Backend service deployment
+├── frontend.yaml           # Frontend deployment & configuration
+├── mysql.yaml              # MySQL installation & configuration
+├── patching.yaml           # OS patching and updates
+├── inventory.ini           # Ansible inventory
+├── backend.service         # Systemd unit file for backend
+├── expense.conf            # Application / Nginx configuration
+└── README.md
 
 🧰 Prerequisites
 
-Before running the automation:
+Ensure the following before execution:
 
-✔ Ansible is installed on the control node (pip install ansible or OS package).
-✔ SSH key-based access to all managed hosts.
-✔ Target servers are reachable and have Python installed (required by Ansible).
-✔ Inventory (inventory.ini) is configured with host IP addresses and group names. 
-GitHub
+Linux-based control node
 
-🚀 Usage
-1. Clone the Repository
+Ansible installed
+
+SSH key-based authentication to managed hosts
+
+Python installed on target machines
+
+Sudo privileges on target servers
+
+Install Ansible
+sudo yum install ansible -y
+# or
+pip install ansible
+
+🚀 Usage & Execution Flow
+1️⃣ Clone Repository
 git clone https://github.com/RajGitUser/expense_application.git
 cd expense_application
 
-2. Update Inventory
+2️⃣ Configure Inventory
 
-Edit inventory.ini to reflect remote hosts where you want to deploy the application:
+Edit inventory.ini:
 
-[expense_app]
-app1 ansible_host=SERVER_IP or DNS (rajkumardaws.space)
+[frontend]
+frontend ansible_host=FRONTEND_IP
 
-3. Execute Playbooks
+[backend]
+backend ansible_host=BACKEND_IP
 
-Provision EC2 or Base Server Setup (Patching, Users, etc.)
+[database]
+mysql ansible_host=DB_IP
 
+3️⃣ Recommended Execution Order
+
+⚠️ Always follow this order for a clean deployment
+
+🔹 Base Server Setup
 ansible-playbook -i inventory.ini 01_ec2_server.yaml
 
-
-Deploy Backend Service
-
-ansible-playbook -i inventory.ini backend.yaml
-
-
-Deploy Frontend Service
-
-ansible-playbook -i inventory.ini frontend.yaml
-
-
-Install and Configure MySQL
-
+🔹 MySQL Database
 ansible-playbook -i inventory.ini mysql.yaml
 
+🔹 Backend Service
+ansible-playbook -i inventory.ini backend.yaml
 
-Apply Patches or System Updates
+🔹 Frontend
+ansible-playbook -i inventory.ini frontend.yaml
 
+🔹 OS Patching (Optional)
 ansible-playbook -i inventory.ini patching.yaml
-
-
-Modify playbook names as needed based on your environment. 
-GitHub
-
 🛠️ Playbooks & Configurations
 File	                      Purpose
 01_ec2_server.yaml	        Initial server setup and provisioning
@@ -113,8 +118,10 @@ backend.service	            Systemd unit for backend service
 expense.conf	              Application configuration file
 🤝 Contributing
 
-Adding more playbooks for monitoring, logging, CI/CD
+⚙️ Service Management
 
-Improving configuration modularization with roles
+Backend service is managed via systemd:
 
-Documenting environment variables and secrets management
+systemctl status backend
+systemctl restart backend
+systemctl enable backend
