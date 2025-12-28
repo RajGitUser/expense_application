@@ -1,3 +1,15 @@
+🧠 Architecture Overview
+User
+  |
+  v
+Frontend (Nginx / Web UI)
+  |
+  v
+Backend API (Systemd Service)
+  |
+  v
+MySQL Database
+
 💰 Expense Application
 
 Ansible automation to deploy and manage a full Expense Tracking Application stack including backend, frontend, and database infrastructure. This repo includes playbooks, inventory, and service configurations that help provision servers, install dependencies, and run services consistently using Ansible. 
